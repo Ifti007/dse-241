@@ -1,0 +1,43 @@
+<html>
+<link rel="stylesheet" href="./css/style.css">
+
+<head>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/geojs/1.4.2/geo.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+
+</head>
+
+<header>
+    <h1>West Nile Virus Visualization </h1>
+    <h2>GeoSpatial Visualization</h2>
+    <h3>Excersise 7</h3>
+</header>
+
+<body>
+    <!-- <div id="map"></div> -->
+    <div id="wrapper">
+        <div id="map"></div>
+       
+    </div>
+    <div class="custom-slider">
+        <label for="customRange">Select Year: </label>
+        <input id="yearRange" type="range" class="custom-range" value="2006" min="2006" max="2015" step="1">
+        <p>Current Year:
+            <span id="year">2006</span>
+        </p>
+        <button id="play">play</button>
+
+    </div>
+    <div id="tooltip" class="hidden">
+        <p>County: <span id="county">County Name</span></p>
+        <p>Total: <span id="countyTotal">Total</span></p>
+    </div>
+
+
+</body>
+
+<script src="./js/script.js"></script>
+
+</html>
