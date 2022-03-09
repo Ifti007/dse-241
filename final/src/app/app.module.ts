@@ -7,13 +7,15 @@ import { PieComponent } from './pie/pie.component';
 import { ScatterComponent } from './scatter/scatter.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import { HelloWorldComponent } from './hello-world/hello-world.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     BarComponent,
     PieComponent,
-    ScatterComponent
+    ScatterComponent,
+    HelloWorldComponent
   ],
   imports: [
     BrowserModule,
