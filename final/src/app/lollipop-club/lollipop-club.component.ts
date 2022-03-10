@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import * as d3 from 'd3';
-
 @Component({
-  selector: 'app-state-level',
-  templateUrl: './state-level.component.html',
-  styleUrls: ['./state-level.component.css']
+  selector: 'app-lollipop-club',
+  templateUrl: './lollipop-club.component.html',
+  styleUrls: ['./lollipop-club.component.css']
 })
+export class LollipopClubComponent implements OnInit {
 
-export class StateLevelComponent implements OnInit {
 
   private data = [{"Name":"Cristiano Ronaldo","Nationality":"Portugal","Club":"Real Madrid","Club_Position":"LW","Club_Kit":7.0,"Rating":94,"Height":"185 cm","Weight":"80 kg","Preffered_Foot":"Right","Birth_Date":"02\/05\/1985","Age":32,"Weak_foot":0.75,"Skill_Moves":1.0,"Ball_Control":0.9777777778,"Dribbling":0.9462365591,"Marking":0.2134831461,"Sliding_Tackle":0.2,"Standing_Tackle":0.3146067416,"Aggression":0.6489361702,"Reactions":1.0,"Attacking_Position":1.0,"Interceptions":0.2888888889,"Vision":0.8928571429,"Composure":0.9101123596,"Crossing":0.9176470588,"Short_Pass":0.8902439024,"Long_Pass":0.8139534884,"Acceleration":0.9411764706,"Speed":0.9529411765,"Stamina":0.9647058824,"Strength":0.7692307692,"Balance":0.6091954023,"Agility":0.9294117647,"Jumping":1.0,"Heading":0.9,"Shot_Power":0.9888888889,"Finishing":0.9784946237,"Long_Shots":0.9885057471,"Curve":0.8720930233,"Freekick_Accuracy":0.808988764,"Penalties":0.8764044944,"Volleys":0.9444444444,"GK_Positioning":0.1444444444,"GK_Diving":0.0681818182,"GK_Kicking":0.1489361702,"GK_Handling":0.1111111111,"GK_Reflexes":0.1123595506,"Age_Bin":"30","Height_Bin(cm)":"185","Weight_Bin(kg)":"80"}
   ,{"Name":"Lionel Messi","Nationality":"Argentina","Club":"FC Barcelona","Club_Position":"RW","Club_Kit":10.0,"Rating":93,"Height":"170 cm","Weight":"72 kg","Preffered_Foot":"Left","Birth_Date":"06\/24\/1987","Age":29,"Weak_foot":0.75,"Skill_Moves":0.75,"Ball_Control":1.0,"Dribbling":1.0,"Marking":0.1123595506,"Sliding_Tackle":0.2333333333,"Standing_Tackle":0.2808988764,"Aggression":0.4893617021,"Reactions":0.9850746269,"Attacking_Position":0.9891304348,"Interceptions":0.2111111111,"Vision":0.9523809524,"Composure":1.0,"Crossing":0.8352941176,"Short_Pass":0.9512195122,"Long_Pass":0.9302325581,"Acceleration":0.9529411765,"Speed":0.8941176471,"Stamina":0.7529411765,"Strength":0.5,"Balance":0.9770114943,"Agility":0.9294117647,"Jumping":0.6625,"Heading":0.7444444444,"Shot_Power":0.9111111111,"Finishing":1.0,"Long_Shots":0.9655172414,"Curve":0.9651162791,"Freekick_Accuracy":0.9662921348,"Penalties":0.7528089888,"Volleys":0.9111111111,"GK_Positioning":0.1444444444,"GK_Diving":0.0568181818,"GK_Kicking":0.1489361702,"GK_Handling":0.1111111111,"GK_Reflexes":0.0786516854,"Age_Bin":"20","Height_Bin(cm)":"165","Weight_Bin(kg)":"70"}
@@ -30,72 +29,85 @@ export class StateLevelComponent implements OnInit {
   }
 
   private createSvg(): void {
-    this.svg = d3.select("figure#bar2")
+    this.svg = d3.select("figure#lollipop")
       .append("svg")
       .attr("width", this.width + (this.margin * 2))
       .attr("height", this.height + (this.margin * 2))
       .append("g")
       .attr("transform", "translate(" + this.margin + "," + this.margin + ")");
   }
-  private drawBars(data: any[]): void {
-    // Create the X-axis band scale
-    //   // Draw the X-axis on the DOM
-    
 
-    //   // Create the Y-axis band scale
-    //   // Draw the Y-axis on the DOM
+   private drawBars(data: any[]): void {
 
-    //   // Create and fill the bars
-    //count of players per club 
+
     let countPerClub = d3.rollup(data, v => v.length, d => d.Club)
-    // let countPerClub2 = d3.rollup(data, v => v.length, d => d.Club).entries() 
+    let countPerClub2 = d3.rollup(data, v => v.length, d => d.Club).entries() 
     let club = [...countPerClub].map(d => d[0]);
     let club_count = [...countPerClub].map(d => d[1]);
     let club_summary = [...countPerClub]
     // console.log('club', club)
     // console.log('club_count', club_count)
     // console.log('club_summary', club_summary)
-
-    // // let temp = countPerClub.values
     // console.log('countPerClub', countPerClub)
-    // // console.log('countPerClub2', countPerClub2)
-    // // console.log('temp', temp)
+    // console.log('countPerClub2', countPerClub2)
     // console.debug('data', data);
     //
     let maxArr = [...countPerClub].map(d => d[1]);
-    let maxY = Math.max(...maxArr) + 5;
+    let maxX = Math.max(...maxArr) + 5;
     // console.debug('maxArr', maxArr)
-
-    const y = d3.scaleLinear()
-      .domain([0, maxY])
-      .range([this.height, 0]);
-
-    this.svg.append("g")
-      .call(d3.axisLeft(y));
     
-    const x = d3.scaleBand()
-      .range([0, this.width])
-      .domain([...countPerClub].map(d => d[0]))
-      .padding(0.2);
-      this.svg.append("g")
-      .attr("transform", "translate(0," + this.height + ")")
-      .call(d3.axisBottom(x))
-      .selectAll("text")
-      .attr("transform", "translate(-10,0)rotate(-45)")
-      .style("text-anchor", "end");
+    let sorted_data = club_summary.sort()
+    // console.log(sorted_data);
 
-    this.svg.selectAll("bars")
+
+    let y = d3.scaleBand()
+    .range([0, this.height])
+    .domain(sorted_data.map(d => d[0]))
+    .padding(1);
+    this.svg.append("g")
+    // .attr("transform", "translate(0," + this.height + ")")
+    .call(d3.axisLeft(y))
+    // .selectAll("text")
+    // .attr("transform", "translate(-10,0)rotate(-45)")
+    // .style("text-anchor", "end");
+    // console.log([...countPerClub].map(d => d[0]))
+
+  // X axis
+    let x = d3.scaleLinear()
+    .domain([0, maxX])
+    .range([ 0, this.width]);
+    this.svg.append("g")
+    .attr("transform", "translate(0," + this.height + ")")
+    .call(d3.axisBottom(x))
+    // .selectAll("text")
+    //   .attr("transform", "translate(-10,0)rotate(-45)")
+    //   .style("text-anchor", "end");
+
+  // Lines
+    this.svg.selectAll("myline")
+    .data(countPerClub)
+    .enter()
+    .append("line")
+    .attr("x1", (d: any) => { 
+      // console.debug('d', d);
+      return x(d[1]) })
+    .attr("x2", x(0))
+    .attr("y1", (d: any) => y(d[0]))
+    .attr("y2", (d: any) => y(d[0]))
+    .attr("stroke", "grey")
+
+  // Circles
+    this.svg.selectAll("mycircle")
       .data(countPerClub)
       .enter()
-      .append("rect")
-      .attr("x", (d: any) => { 
-        // console.debug('d', d);
-        return x(d[0]) })
-      .attr("y", (d: any) => y(d[1]))
-      .attr("width", x.bandwidth())
-      .attr("height", (d: any) => this.height - y(d[1]))
-      .attr("fill", "#d04a35");
-
+      .append("circle")
+        .attr("cx", (d: any) => { 
+          // console.debug('d', d);
+          return x(d[1]) })
+        .attr("cy", (d: any) => y(d[0]))
+        .attr("r", "8")
+        .style("fill", "#69b3a2")
+        .attr("stroke", "black")
 
   }
 }
