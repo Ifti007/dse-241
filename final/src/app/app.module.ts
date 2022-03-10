@@ -8,6 +8,7 @@ import { ScatterComponent } from './scatter/scatter.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { HelloWorldComponent } from './hello-world/hello-world.component';
+import { WorldVizComponent } from './world-viz/world-viz.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { HelloWorldComponent } from './hello-world/hello-world.component';
     BarComponent,
     PieComponent,
     ScatterComponent,
-    HelloWorldComponent
+    HelloWorldComponent,
+    WorldVizComponent
   ],
   imports: [
     BrowserModule,
