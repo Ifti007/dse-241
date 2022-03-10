@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { HelloWorldComponent } from './hello-world/hello-world.component';
 import { StateLevelComponent } from './state-level/state-level.component';
+import { BubbleGraphComponent } from './bubble-graph/bubble-graph.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { StateLevelComponent } from './state-level/state-level.component';
     PieComponent,
     ScatterComponent,
     HelloWorldComponent,
-    StateLevelComponent
+    StateLevelComponent,
+    BubbleGraphComponent
   ],
   imports: [
     BrowserModule,
