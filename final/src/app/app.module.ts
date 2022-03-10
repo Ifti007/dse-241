@@ -8,6 +8,7 @@ import { ScatterComponent } from './scatter/scatter.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { HelloWorldComponent } from './hello-world/hello-world.component';
+import { WorldVizComponent } from './world-viz/world-viz.component';
 import { StateLevelComponent } from './state-level/state-level.component';
 // import { BubbleGraphComponent } from './bubble-graph/bubble-graph.component';
 import { LollipopClubComponent } from './lollipop-club/lollipop-club.component';
@@ -22,6 +23,7 @@ import { CircleNodeComponent } from './circle-node/circle-node.component';
     PieComponent,
     ScatterComponent,
     HelloWorldComponent,
+    WorldVizComponent,
     StateLevelComponent,
     // BubbleGraphComponent,
     LollipopClubComponent,
