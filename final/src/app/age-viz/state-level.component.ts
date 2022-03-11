@@ -22,9 +22,10 @@ export class StateLevelComponent implements OnInit {
   ];
   chartData = {
     chartType: 'PieChart', dataTable: this.sampleData, options: {
+      width:600, height: 400,
       title: 'Age Group',
       curveType: 'function',
-      legend: { position: 'bottom' },
+      // legend: { position: 'bottom' },
       vAxis: { gridlines: { count: -1 } },
     },
   }
@@ -50,19 +51,19 @@ export class StateLevelComponent implements OnInit {
   private processData(data: any[]) {
     this.showChart = false;
     // console.debug('processing data', data)
-    let groupedData = d3.rollup(data, v => v.length, d => d.Age_Bin);
+    let groupedData = d3.rollup(data, v => v.length, d => d.Age_Bin + ' Years Old');
     let groupedArray = [...groupedData];
     
-    groupedArray = groupedArray.sort((a, b) => a[0] - b[0]);
+    // groupedArray = groupedArray.sort((a, b) => a - b);
 
     // console.debug('top player sorted', sorted)
     // let playerNames = Array.from(sorted, d => d.Name)
     let dataTable :any[]= [
       ['Age Group', 'Count']
-      , groupedArray[1] 
-      , groupedArray[2]
+      , groupedArray[2] 
+      , groupedArray[1]
+      , groupedArray[0]
       , groupedArray[3]
-      , groupedArray[4]
     ];
 
     this.chartData.dataTable = dataTable;
