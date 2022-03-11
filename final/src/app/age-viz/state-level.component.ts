@@ -36,7 +36,7 @@ export class StateLevelComponent implements OnInit {
 
   ngOnInit(): void {
     // console.debug('top Player data', this.data)
-    
+
     this.processData(this.data[0]);
   }
 
@@ -49,13 +49,23 @@ export class StateLevelComponent implements OnInit {
 
   private processData(data: any[]) {
     this.showChart = false;
-    console.debug('processing data', data)
+    // console.debug('processing data', data)
+    let groupedData = d3.rollup(data, v => v.length, d => d.Age_Bin);
+    let groupedArray = [...groupedData];
+    // console.debug('groupedData', groupedArray)
+    
     let sorted = data.sort((a, b) => a.Ranking - b.Ranking).slice(0, 10);
     // console.debug('top player sorted', sorted)
-    let playerNames = Array.from(sorted, d => d.Name)
-    let dataTable = [['Skills', ...playerNames]];
+    // let playerNames = Array.from(sorted, d => d.Name)
+    let dataTable :any[]= [
+      ['Age Group', 'Count']
+      , groupedArray[0] 
+      , groupedArray[1]
+      , groupedArray[2]
+      , groupedArray[3]
+    ];
 
-    this.chartData.dataTable = this.sampleData;
+    this.chartData.dataTable = dataTable;
     this.refreshChart();
 
 
