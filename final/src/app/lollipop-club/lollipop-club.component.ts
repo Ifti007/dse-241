@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import * as d3 from 'd3';
+
+
 @Component({
   selector: 'app-lollipop-club',
   templateUrl: './lollipop-club.component.html',
   styleUrls: ['./lollipop-club.component.css']
 })
+
 export class LollipopClubComponent implements OnInit {
 
 
@@ -15,16 +18,39 @@ export class LollipopClubComponent implements OnInit {
   ,{"Name":"Manuel Neuer","Nationality":"Germany","Club":"FC Bayern","Club_Position":"GK","Club_Kit":1.0,"Rating":92,"Height":"193 cm","Weight":"92 kg","Preffered_Foot":"Right","Birth_Date":"03\/27\/1986","Age":31,"Weak_foot":0.75,"Skill_Moves":0.0,"Ball_Control":0.4777777778,"Dribbling":0.2795698925,"Marking":0.0786516854,"Sliding_Tackle":0.0666666667,"Standing_Tackle":0.0786516854,"Aggression":0.2872340426,"Reactions":0.8358208955,"Attacking_Position":0.1086956522,"Interceptions":0.3,"Vision":0.7142857143,"Composure":0.7303370787,"Crossing":0.1058823529,"Short_Pass":0.5487804878,"Long_Pass":0.6046511628,"Acceleration":0.5529411765,"Speed":0.5882352941,"Stamina":0.4,"Strength":0.8076923077,"Balance":0.2873563218,"Agility":0.4823529412,"Jumping":0.7875,"Heading":0.2333333333,"Shot_Power":0.2444444444,"Finishing":0.1182795699,"Long_Shots":0.1379310345,"Curve":0.0930232558,"Freekick_Accuracy":0.0786516854,"Penalties":0.4494382022,"Volleys":0.0888888889,"GK_Positioning":1.0,"GK_Diving":1.0,"GK_Kicking":1.0,"GK_Handling":0.9888888889,"GK_Reflexes":0.9887640449,"Age_Bin":"30","Height_Bin(cm)":"185","Weight_Bin(kg)":"90"}
 ];
 
+private sortFilter(data:any []): any[] {
+  return data.sort((a,b) => a.Rating - b.Rating);
+}
+
+
+private loadData(): void {
+  let csvFile = "https://raw.githubusercontent.com/Ifti007/dse-241/main/data/soccer.csv";
+
+  Promise.all([
+    d3.csv(csvFile)
+  ]).then((loadedData) => {
+    //console.debug('loadData', loadedData);
+    let soccerData: any[] = loadedData[0] || [];
+    let sortData = this.sortFilter(soccerData);
+    this.data = sortData.slice(0, 100);
+    //console.debug(this.data);
+    this.drawBars(sortData.slice(0,100));
+  });
+
+}
+
   private svg: any;
-  private margin = 50;
+  private margin = 100;
   private width = 750 - (this.margin * 2);
-  private height = 400 - (this.margin * 2);
+  private height = 400 ;//- (this.margin );
   constructor() { }
 
 
   ngOnInit(): void {
+    this.loadData();
     this.createSvg();
-    this.drawBars(this.data);
+    // this.drawBars(this.data);
+    
 
   }
 
@@ -41,43 +67,44 @@ export class LollipopClubComponent implements OnInit {
 
 
     let countPerClub = d3.rollup(data, v => v.length, d => d.Club)
+    // countPerClub
     let countPerClub2 = d3.rollup(data, v => v.length, d => d.Club).entries() 
     let club = [...countPerClub].map(d => d[0]);
     let club_count = [...countPerClub].map(d => d[1]);
-    let club_summary = [...countPerClub]
-    // console.log('club', club)
-    // console.log('club_count', club_count)
-    // console.log('club_summary', club_summary)
-    // console.log('countPerClub', countPerClub)
-    // console.log('countPerClub2', countPerClub2)
-    // console.debug('data', data);
+    let club_summary = [...countPerClub].sort(function(a, b){ return d3.descending(a[1], b[1]); })
+    // //console.log('club', club)
+    // //console.log('club_count', club_count)
+    //console.log('club_summary', club_summary)
+    // //console.log('countPerClub', countPerClub)
+    // //console.log('countPerClub2', countPerClub2)
+    // //console.debug('data', data);
     //
     let maxArr = [...countPerClub].map(d => d[1]);
     let maxX = Math.max(...maxArr) + 5;
-    // console.debug('maxArr', maxArr)
-    
-    let sorted_data = club_summary.sort()
+    //console.debug('maxArr', maxArr)
+    //console.debug(club_summary.length);
+    let sorted_data = club_summary.slice(0,20)
     // console.log(sorted_data);
 
 
     let y = d3.scaleBand()
     .range([0, this.height])
     .domain(sorted_data.map(d => d[0]))
-    .padding(1);
+    .padding(0.5);
     this.svg.append("g")
     // .attr("transform", "translate(0," + this.height + ")")
     .call(d3.axisLeft(y))
     // .selectAll("text")
     // .attr("transform", "translate(-10,0)rotate(-45)")
     // .style("text-anchor", "end");
-    // console.log([...countPerClub].map(d => d[0]))
+    // //console.log([...countPerClub].map(d => d[0]))
 
   // X axis
     let x = d3.scaleLinear()
-    .domain([0, maxX])
-    .range([ 0, this.width]);
+    .domain([0 , maxX])
+    .range([ 0, this.width])
     this.svg.append("g")
-    .attr("transform", "translate(0," + this.height + ")")
+    .attr("transform", "translate(0," + this.height  + ")")
     .call(d3.axisBottom(x))
     // .selectAll("text")
     //   .attr("transform", "translate(-10,0)rotate(-45)")
@@ -85,24 +112,24 @@ export class LollipopClubComponent implements OnInit {
 
   // Lines
     this.svg.selectAll("myline")
-    .data(countPerClub)
+    .data(sorted_data)
     .enter()
     .append("line")
     .attr("x1", (d: any) => { 
-      // console.debug('d', d);
+      //console.debug('d', d);
       return x(d[1]) })
-    .attr("x2", x(0))
+    .attr("x2", x(0) )
     .attr("y1", (d: any) => y(d[0]))
-    .attr("y2", (d: any) => y(d[0]))
+    .attr("y2", (d: any) => y(d[0])) 
     .attr("stroke", "grey")
 
   // Circles
     this.svg.selectAll("mycircle")
-      .data(countPerClub)
+      .data(sorted_data)
       .enter()
       .append("circle")
         .attr("cx", (d: any) => { 
-          // console.debug('d', d);
+          // //console.debug('d', d);
           return x(d[1]) })
         .attr("cy", (d: any) => y(d[0]))
         .attr("r", "8")
