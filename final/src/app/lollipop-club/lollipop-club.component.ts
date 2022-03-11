@@ -22,7 +22,7 @@ private sortFilter(data:any []): any[] {
   return data.sort((a,b) => a.Rating - b.Rating);
 }
 
-//Load 
+//Load  Data
 private loadData(): void {
   let csvFile = "https://raw.githubusercontent.com/Ifti007/dse-241/main/data/soccer.csv";
 
