@@ -58,9 +58,9 @@ private loadData(): void {
     this.svg = d3.select("figure#lollipop")
       .append("svg")
       .attr("width", this.width + (this.margin * 2))
-      .attr("height", this.height + (this.margin * 2))
+      .attr("height", this.height + (this.margin/2))
       .append("g")
-      .attr("transform", "translate(" + this.margin + "," + this.margin + ")");
+      .attr("transform", "translate(" + this.margin + "," + this.margin/this.margin + ")");
   }
 
    private drawBars(data: any[]): void {
