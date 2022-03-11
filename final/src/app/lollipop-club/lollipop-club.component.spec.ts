@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BubbleGraphComponent } from './bubble-graph.component';
+import { LollipopClubComponent } from './lollipop-club.component';
 
-describe('BubbleGraphComponent', () => {
-  let component: BubbleGraphComponent;
-  let fixture: ComponentFixture<BubbleGraphComponent>;
+describe('LollipopClubComponent', () => {
+  let component: LollipopClubComponent;
+  let fixture: ComponentFixture<LollipopClubComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BubbleGraphComponent ]
+      declarations: [ LollipopClubComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BubbleGraphComponent);
+    fixture = TestBed.createComponent(LollipopClubComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

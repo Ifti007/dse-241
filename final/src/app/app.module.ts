@@ -11,7 +11,11 @@ import { MatToolbarModule} from '@angular/material/toolbar';
 import { HelloWorldComponent } from './hello-world/hello-world.component';
 import { WorldVizComponent } from './world-viz/world-viz.component';
 import { StateLevelComponent } from './state-level/state-level.component';
-import { BubbleGraphComponent } from './bubble-graph/bubble-graph.component';
+// import { BubbleGraphComponent } from './bubble-graph/bubble-graph.component';
+import { LollipopClubComponent } from './lollipop-club/lollipop-club.component';
+import { LineRatingComponent } from './line-rating/line-rating.component';
+import { CircleNodeComponent } from './circle-node/circle-node.component';
+
 
 import { Ng2GoogleChartsModule } from 'ng2-google-charts';
 import { TopPlayersComponent } from './top-players/top-players.component';
@@ -34,8 +38,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HelloWorldComponent,
     WorldVizComponent,
     StateLevelComponent,
-    BubbleGraphComponent,
-    TopPlayersComponent
+    TopPlayersComponent,
+    // BubbleGraphComponent,
+    LollipopClubComponent,
+    LineRatingComponent,
+    CircleNodeComponent
   ],
   imports: [
     BrowserModule,
