@@ -4,7 +4,7 @@ import { LollipopClubComponent } from './lollipop-club.component';
 
 describe('LollipopClubComponent', () => {
   let component: LollipopClubComponent;
-  let fixture: ComponentFixture<LollipopClubComponent>;
+  let fixture: ComponentFixture<LollipopClubComponent>;   
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
