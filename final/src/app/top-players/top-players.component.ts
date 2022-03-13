@@ -50,6 +50,7 @@ export class TopPlayersComponent implements OnInit {
     chartType: 'LineChart', dataTable: this.sampleData, options: {
       title: 'Top Players',
       curveType: 'function',
+      height: 400,
       legend: { position: 'bottom' },
       vAxis: { gridlines: { count: -1 } },
     },
@@ -82,7 +83,7 @@ export class TopPlayersComponent implements OnInit {
       let rs = Array.from(sorted, d => +d[s] || 0);
       dataTable.push([s, ...rs])
     })
-    console.debug('dataTable', dataTable);
+    // console.debug('dataTable', dataTable);
 
     this.chartData.dataTable = dataTable;
     this.refreshChart();

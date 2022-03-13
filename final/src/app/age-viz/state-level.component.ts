@@ -51,19 +51,23 @@ export class StateLevelComponent implements OnInit {
   private processData(data: any[]) {
     this.showChart = false;
     // console.debug('processing data', data)
-    let groupedData = d3.rollup(data, v => v.length, d => d.Age_Bin + ' Years Old');
+    let groupedData = d3.rollup(data, v => v.length, d => d.Age_Bin);
     let groupedArray = [...groupedData];
     
-    // groupedArray = groupedArray.sort((a, b) => a - b);
+    groupedArray = groupedArray.sort((a, b) => a[0] - b[0]);
+    // console.debug('groupedArray', groupedArray);
+    // console.debug(groupedArray.map(d => [+d[0] + '-' + (+d[0]+10) + ' Years Old', d[1]]));
 
+    groupedArray = groupedArray.map(d => [+d[0] + '-' + (+d[0]+10) + ' Years Old', d[1]])
     // console.debug('top player sorted', sorted)
     // let playerNames = Array.from(sorted, d => d.Name)
     let dataTable :any[]= [
       ['Age Group', 'Count']
-      , groupedArray[2] 
+      // , groupedArray[0] 
       , groupedArray[1]
-      , groupedArray[0]
+      , groupedArray[2]
       , groupedArray[3]
+      , groupedArray[4]
     ];
 
     this.chartData.dataTable = dataTable;
